@@ -1,15 +1,16 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 function EditProductPage(props) {
-
   const [productToUpdate, setProductToUpdate] = useState(null);
+  const { id } = useParams();
 
-  console.log({ productToUpdate });
-
-  /** TODO: Write code to set the `productToUpdate` state with the product data
-   *  based on the ID that we get from the URL path parameter.
-   *  You will need to use: `props`, `useParams`, and `useEffect` to achieve this.
-   */
+  useEffect(() => {
+    const matchingProduct = props.products.find(
+      (product) => Number(product.id) === Number(id)
+    );
+    setProductToUpdate(matchingProduct);
+  }, [id]);
 
   function handleChange(event) {
     const name = event.target.name;
@@ -17,10 +18,22 @@ function EditProductPage(props) {
 
     setProductToUpdate({ ...productToUpdate, [name]: value });
   }
-
+  
   function handleSubmit(event) {
     event.preventDefault();
+  
+    const updatedProducts = props.products.map(product => {
+      if (Number(product.id) === Number(id)) {
+        return { ...product, ...productToUpdate }; 
+      }
+      return product; 
+    });
+  
+    props.setProducts(updatedProducts);
+  
+    console.log('Product updated:', updatedProducts);
   }
+  
 
   if (!productToUpdate) return <div>Loading...</div>;
 

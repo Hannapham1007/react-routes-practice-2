@@ -5,12 +5,17 @@ import Home from './pages/Home/Home';
 import ProductsPage from './pages/Products/ProductsPage';
 import ViewProductPage from './pages/ViewProduct/ViewProductPage';
 import './App.css'
+import EditProductPage from './pages/EditProduct/EditProduct.jsx';
 
 export default function App() {
   const [products, setProducts] = useState(productsData);
   const [apps, setApps] = useState(appsData);
 
   console.log({ products, apps });
+
+  const updateProducts = (updatedProducts) => {
+    setProducts(updatedProducts);
+  };
 
   return (
     <div className="App">
@@ -33,6 +38,7 @@ export default function App() {
          Route should be /products/:id/edit and it should use
          the EditProduct element
          */}
+        <Route path="/products/:id/edit" element={<EditProductPage products={products} setProducts={setProducts}/>}/>
         <Route path="/products/:id" element={<ViewProductPage products={products} />} />
         <Route path="/products" element={<ProductsPage products={products} />}/>
         <Route path="/" element={<Home />} />

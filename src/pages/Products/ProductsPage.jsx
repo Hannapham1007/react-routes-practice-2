@@ -14,10 +14,14 @@ function ProductsPage(props) {
             <li key={index}>
               <h3>{product.name}</h3>
               <p>£{product.price}</p>
-              <Link to={`/products/${product.id}`}>
+              <Link to={`/products/${product.id} ` }>
                 View Product
               </Link>
+             
               {/* TODO: Add a link to the "edit" page here. */}
+              <Link to={`/products/${product.id}/edit`}>
+                Edit
+              </Link>
             </li>
           );
         })}
